@@ -5,6 +5,7 @@ plugins {
 
 android {
     namespace = "com.example.featuretwo.api"
+
     compileSdk {
         version = release(36)
     }

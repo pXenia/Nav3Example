@@ -5,9 +5,11 @@ plugins {
 
 android {
     namespace = "com.example.core.navigation"
+
     compileSdk {
         version = release(36)
     }
+
     buildFeatures {
         compose = true
     }

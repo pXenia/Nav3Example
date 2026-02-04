@@ -13,6 +13,9 @@
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/core" />
             <option value="$PROJECT_DIR$/core/navigation" />
+            <option value="$PROJECT_DIR$/featuredetail" />
+            <option value="$PROJECT_DIR$/featuredetail/api" />
+            <option value="$PROJECT_DIR$/featuredetail/impl" />
             <option value="$PROJECT_DIR$/featureone" />
             <option value="$PROJECT_DIR$/featureone/api" />
             <option value="$PROJECT_DIR$/featureone/impl" />

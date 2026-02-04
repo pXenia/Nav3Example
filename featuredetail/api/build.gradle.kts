@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "com.example.featureone.api"
+    namespace = "com.example.featuredetail.api"
 
     compileSdk {
         version = release(36)
@@ -13,4 +13,5 @@ android {
 
 dependencies {
     implementation(libs.androidx.navigation3.runtime)
+    implementation(project(":core:navigation"))
 }
