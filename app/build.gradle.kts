@@ -62,7 +62,6 @@ dependencies {
     implementation(project(":featureone:impl"))
     implementation(project(":featuretwo:api"))
     implementation(project(":featuretwo:impl"))
-    implementation(project(":featuredetail:api"))
-    implementation(project(":featuredetail:impl"))
+    implementation(project(":featuredetail:navigation"))
     implementation(project(":core:navigation"))
 }

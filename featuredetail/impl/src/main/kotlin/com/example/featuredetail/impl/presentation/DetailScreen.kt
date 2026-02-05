@@ -22,7 +22,7 @@ fun DetailScreenPreview() {
 }
 
 @Composable
-internal fun DetailScreen(
+fun DetailScreen(
     modifier: Modifier = Modifier,
     onButtonBackClick: () -> Unit,
     viewModel: DetailScreenViewModel = hiltViewModel(),

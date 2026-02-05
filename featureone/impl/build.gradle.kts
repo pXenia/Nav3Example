@@ -34,6 +34,6 @@ dependencies {
     implementation(libs.androidx.hilt.navigation.compose)
     ksp(libs.hilt.compiler)
     implementation(project(":featureone:api"))
-    implementation(project(":featuredetail:api"))
+    implementation(project(":featuredetail:navigation"))
     implementation(project(":core:navigation"))
 }

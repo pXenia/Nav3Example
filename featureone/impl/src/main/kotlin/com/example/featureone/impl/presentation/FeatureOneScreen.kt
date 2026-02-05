@@ -17,7 +17,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 
-
 @Preview(showBackground = true)
 @Composable
 fun FeatureOneScreenPreview() {
@@ -51,7 +50,10 @@ internal fun FeatureOneScreen(
                         .fillMaxWidth()
                         .padding(16.dp)
                         .background(Color.Red.copy(alpha = 0.2f))
-                        .clickable { onItemClick(it.toString()) },
+                        .clickable {
+                            viewModel.openDetail(it.toString())
+                            onItemClick(it.toString())
+                        },
                 )
             }
         }

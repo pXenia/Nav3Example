@@ -1,4 +1,4 @@
-package com.example.featuredetail.impl.navigation
+package com.example.featuredetail.navigation
 
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
@@ -11,7 +11,6 @@ import androidx.navigation3.runtime.EntryProviderScope
 import androidx.navigation3.runtime.NavKey
 import androidx.navigation3.ui.NavDisplay
 import com.example.core.navigation.Navigator
-import com.example.featuredetail.api.DetailNavKey
 import com.example.featuredetail.impl.presentation.DetailScreen
 import com.example.featuredetail.impl.presentation.DetailScreenViewModel
 
