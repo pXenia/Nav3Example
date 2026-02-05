@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -18,15 +19,19 @@ import androidx.hilt.navigation.compose.hiltViewModel
 @Preview(showBackground = true)
 @Composable
 fun DetailScreenPreview() {
-    DetailScreen(onButtonBackClick = {})
 }
 
 @Composable
 internal fun DetailScreen(
     modifier: Modifier = Modifier,
+    id: String,
     onButtonBackClick: () -> Unit,
     viewModel: DetailScreenViewModel = hiltViewModel(),
 ) {
+    LaunchedEffect(id) {
+        viewModel.initialize(id)
+    }
+
     val uiText by viewModel.uiState.collectAsState()
 
     Column(
@@ -36,7 +41,9 @@ internal fun DetailScreen(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
     ) {
-        Text(text = uiText)
+
+        uiText?.let { Text(text = it) }
+
         Button(
             onClick = onButtonBackClick,
         ) {
