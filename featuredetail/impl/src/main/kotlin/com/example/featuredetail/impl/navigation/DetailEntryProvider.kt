@@ -6,12 +6,14 @@ import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.animation.togetherWith
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation3.runtime.EntryProviderScope
 import androidx.navigation3.runtime.NavKey
 import androidx.navigation3.ui.NavDisplay
 import com.example.core.navigation.Navigator
 import com.example.featuredetail.api.DetailNavKey
-import com.example.featuredetail.impl.DetailScreen
+import com.example.featuredetail.impl.presentation.DetailScreen
+import com.example.featuredetail.impl.presentation.DetailScreenViewModel
 
 fun EntryProviderScope<NavKey>.featureDetailEntryBuilder(navigator: Navigator) {
     val duration = 1000
@@ -31,8 +33,12 @@ fun EntryProviderScope<NavKey>.featureDetailEntryBuilder(navigator: Navigator) {
         val id = key.id
 
         DetailScreen(
-            id = id,
-            onButtonBackClick = { navigator.goBack() }
+            onButtonBackClick = { navigator.goBack() },
+            viewModel = hiltViewModel<DetailScreenViewModel, DetailScreenViewModel.Factory>(
+                key = id
+            ) { factory ->
+                factory.create(id)
+            }
         )
     }
 }

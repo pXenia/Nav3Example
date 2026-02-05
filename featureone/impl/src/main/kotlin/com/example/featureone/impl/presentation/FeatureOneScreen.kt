@@ -1,4 +1,4 @@
-package com.example.featureone.impl
+package com.example.featureone.impl.presentation
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -15,6 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 
 
 @Preview(showBackground = true)
@@ -29,6 +30,7 @@ fun FeatureOneScreenPreview() {
 internal fun FeatureOneScreen(
     modifier: Modifier = Modifier,
     onItemClick: (String) -> Unit,
+    viewModel: FeatureOneViewModel = hiltViewModel()
 ) {
     Column(
         modifier = modifier

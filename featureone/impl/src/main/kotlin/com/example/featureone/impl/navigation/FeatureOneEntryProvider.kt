@@ -5,7 +5,7 @@ import androidx.navigation3.runtime.NavKey
 import com.example.core.navigation.Navigator
 import com.example.featuredetail.api.navigateToDetail
 import com.example.featureone.api.FeatureOneNavKey
-import com.example.featureone.impl.FeatureOneScreen
+import com.example.featureone.impl.presentation.FeatureOneScreen
 
 /** Регистрирует сопоставление ключа с соответствующим экраном.*/
 fun EntryProviderScope<NavKey>.featureOneEntryBuilder(navigator: Navigator) {
