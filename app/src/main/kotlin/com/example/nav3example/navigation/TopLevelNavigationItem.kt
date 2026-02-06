@@ -4,7 +4,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.Done
 import androidx.compose.ui.graphics.vector.ImageVector
-import com.example.featureone.api.FeatureOneNavKey
+import com.example.featureone.api.TasksListNavKey
 import com.example.featuretwo.api.FeatureTwoNavKey
 
 /**
@@ -27,6 +27,6 @@ val FEATURE_TWO = TopLevelNavigationItem(
 )
 
 val TOP_LEVEL_NAV_ITEMS = mapOf(
-    FeatureOneNavKey to FEATURE_ONE,
+    TasksListNavKey to FEATURE_ONE,
     FeatureTwoNavKey to FEATURE_TWO
 )

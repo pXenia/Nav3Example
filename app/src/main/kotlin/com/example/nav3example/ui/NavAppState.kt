@@ -7,7 +7,7 @@ import androidx.navigation3.runtime.NavKey
 import com.example.core.navigation.NavigationState
 import com.example.core.navigation.Navigator
 import com.example.core.navigation.rememberNavigationState
-import com.example.featureone.api.FeatureOneNavKey
+import com.example.featureone.api.TasksListNavKey
 import com.example.featuretwo.api.FeatureTwoNavKey
 
 /**
@@ -18,8 +18,8 @@ import com.example.featuretwo.api.FeatureTwoNavKey
  */
 @Composable
 fun rememberAppState(
-    startKey: NavKey = FeatureOneNavKey,
-    topLevelKeys: Set<NavKey> = setOf(FeatureOneNavKey, FeatureTwoNavKey)
+    startKey: NavKey = TasksListNavKey,
+    topLevelKeys: Set<NavKey> = setOf(TasksListNavKey, FeatureTwoNavKey)
 ): AppState {
     val navigationState = rememberNavigationState(
         startKey = startKey,

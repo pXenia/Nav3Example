@@ -4,4 +4,4 @@ import androidx.navigation3.runtime.NavKey
 import kotlinx.serialization.Serializable
 
 @Serializable
-object FeatureOneNavKey: NavKey
+object TasksListNavKey: NavKey

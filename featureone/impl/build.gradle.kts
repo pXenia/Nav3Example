@@ -36,4 +36,5 @@ dependencies {
     implementation(project(":featureone:api"))
     implementation(project(":featuredetail:navigation"))
     implementation(project(":core:navigation"))
+    implementation(project(":core:database"))
 }

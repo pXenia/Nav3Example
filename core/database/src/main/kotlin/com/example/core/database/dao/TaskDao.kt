@@ -1,7 +1,6 @@
 package com.example.core.database.dao
 
 import androidx.room.Dao
-import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
@@ -19,9 +18,9 @@ interface TaskDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertTask(task: TaskEntity)
 
-    @Delete
-    suspend fun deleteTask(task: TaskEntity)
+    @Query("DELETE FROM tasks WHERE id = :id")
+    suspend fun deleteTask(id: Long)
 
     @Query("UPDATE tasks SET is_completed = :completed WHERE id = :id")
-    suspend fun updateCompletionStatus(id: Long, completed: Boolean)
+    suspend fun completionStatus(id: Long, completed: Boolean)
 }
