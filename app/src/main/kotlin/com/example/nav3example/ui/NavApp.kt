@@ -13,7 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.ui.NavDisplay
 import com.example.core.navigation.toEntries
-import com.example.featuredetail.navigation.featureDetailEntryBuilder
+import com.example.featuredetail.navigation.featureTaskDetailEntryBuilder
 import com.example.featureone.impl.navigation.featureOneEntryBuilder
 import com.example.featuretwo.impl.navigation.featureTwoEntryBuilder
 import com.example.nav3example.navigation.TOP_LEVEL_NAV_ITEMS
@@ -41,7 +41,7 @@ fun NavApp(appState: AppState = rememberAppState()) {
         val entryProvider = entryProvider {
             featureOneEntryBuilder(appState.navigator)
             featureTwoEntryBuilder(appState.navigator)
-            featureDetailEntryBuilder(appState.navigator)
+            featureTaskDetailEntryBuilder(appState.navigator)
         }
 
         Box(modifier = Modifier.fillMaxSize().padding(padding)) {

@@ -11,12 +11,13 @@ import androidx.navigation3.runtime.EntryProviderScope
 import androidx.navigation3.runtime.NavKey
 import androidx.navigation3.ui.NavDisplay
 import com.example.core.navigation.Navigator
+import com.example.featuredetail.impl.presentation.presentation.AddTaskScreen
 import com.example.featuredetail.impl.presentation.presentation.TaskScreen
 import com.example.featuredetail.impl.presentation.presentation.TaskViewModel
 
-fun EntryProviderScope<NavKey>.featureDetailEntryBuilder(navigator: Navigator) {
+fun EntryProviderScope<NavKey>.featureTaskDetailEntryBuilder(navigator: Navigator) {
     val duration = 1000
-    entry<DetailNavKey>(metadata = NavDisplay.transitionSpec {
+    entry<TaskDetailNavKey>(metadata = NavDisplay.transitionSpec {
         slideInHorizontally(
             initialOffsetX = { it }, animationSpec = tween(duration)
         ) togetherWith slideOutHorizontally(
@@ -38,6 +39,11 @@ fun EntryProviderScope<NavKey>.featureDetailEntryBuilder(navigator: Navigator) {
             ) { factory ->
                 factory.create(id)
             }
+        )
+    }
+    entry<CreateTaskNavKey>{
+        AddTaskScreen(
+            onBack = { navigator.goBack() },
         )
     }
 }
