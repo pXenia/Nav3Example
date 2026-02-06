@@ -11,8 +11,8 @@ import androidx.navigation3.runtime.EntryProviderScope
 import androidx.navigation3.runtime.NavKey
 import androidx.navigation3.ui.NavDisplay
 import com.example.core.navigation.Navigator
-import com.example.featuredetail.impl.presentation.DetailScreen
-import com.example.featuredetail.impl.presentation.DetailScreenViewModel
+import com.example.featuredetail.impl.presentation.presentation.TaskScreen
+import com.example.featuredetail.impl.presentation.presentation.TaskViewModel
 
 fun EntryProviderScope<NavKey>.featureDetailEntryBuilder(navigator: Navigator) {
     val duration = 1000
@@ -31,10 +31,10 @@ fun EntryProviderScope<NavKey>.featureDetailEntryBuilder(navigator: Navigator) {
     }) { key ->
         val id = key.id
 
-        DetailScreen(
+        TaskScreen(
             onButtonBackClick = { navigator.goBack() },
-            viewModel = hiltViewModel<DetailScreenViewModel, DetailScreenViewModel.Factory>(
-                key = id
+            viewModel = hiltViewModel<TaskViewModel, TaskViewModel.Factory>(
+                key = id.toString()
             ) { factory ->
                 factory.create(id)
             }

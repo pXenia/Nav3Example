@@ -5,8 +5,8 @@ import com.example.core.navigation.Navigator
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class DetailNavKey(val id: String) : NavKey
+data class DetailNavKey(val id: Long) : NavKey
 
-fun Navigator.navigateToDetail(id: String) {
+fun Navigator.navigateToDetail(id: Long) {
     navigate(DetailNavKey(id))
 }

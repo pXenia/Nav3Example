@@ -37,4 +37,5 @@ dependencies {
     implementation(libs.androidx.hilt.navigation.compose)
     ksp(libs.hilt.compiler)
     implementation(project(":core:navigation"))
+    implementation(project(":core:database"))
 }
