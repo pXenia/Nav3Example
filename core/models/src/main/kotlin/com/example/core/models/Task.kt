@@ -1,4 +1,4 @@
-package com.example.featureone.impl.domain
+package com.example.core.models
 
 data class Task(
     val id: Long = 0,

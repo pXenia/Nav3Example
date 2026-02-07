@@ -14,7 +14,7 @@ import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.ui.NavDisplay
 import com.example.core.navigation.toEntries
 import com.example.featuredetail.navigation.featureTaskDetailEntryBuilder
-import com.example.featureone.impl.navigation.featureOneEntryBuilder
+import com.example.featureone.navigation.featureOneEntryBuilder
 import com.example.featuretwo.impl.navigation.featureTwoEntryBuilder
 import com.example.nav3example.navigation.TOP_LEVEL_NAV_ITEMS
 

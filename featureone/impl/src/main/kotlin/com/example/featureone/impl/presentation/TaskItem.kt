@@ -19,7 +19,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
-import com.example.featureone.impl.domain.Task
+import com.example.core.models.Task
 
 @Composable
 internal fun TaskItem(

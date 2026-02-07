@@ -2,10 +2,10 @@ package com.example.featureone.impl.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.featureone.impl.domain.Task
-import com.example.featureone.impl.domain.usecase.ChangeTasksStatusUseCase
-import com.example.featureone.impl.domain.usecase.DeleteTaskUseCase
-import com.example.featureone.impl.domain.usecase.GetAllTasksUseCase
+import com.example.core.models.Task
+import com.example.featureone.api.domain.ChangeTasksStatusUseCase
+import com.example.featureone.api.domain.DeleteTaskUseCase
+import com.example.featureone.api.domain.GetAllTasksUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import jakarta.inject.Inject
 import kotlinx.coroutines.flow.SharingStarted

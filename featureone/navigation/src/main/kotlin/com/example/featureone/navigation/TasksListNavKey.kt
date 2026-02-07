@@ -1,4 +1,4 @@
-package com.example.featureone.api
+package com.example.featureone.navigation
 
 import androidx.navigation3.runtime.NavKey
 import kotlinx.serialization.Serializable

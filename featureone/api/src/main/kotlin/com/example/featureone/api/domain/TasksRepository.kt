@@ -1,8 +1,9 @@
-package com.example.featureone.impl.domain
+package com.example.featureone.api.domain
 
+import com.example.core.models.Task
 import kotlinx.coroutines.flow.Flow
 
-internal interface TasksRepository {
+interface TasksRepository {
     fun getAllTasks(): Flow<List<Task>>
     suspend fun deleteTask(id: Long)
     suspend fun changeTaskStatus(id: Long, isCompleted: Boolean)

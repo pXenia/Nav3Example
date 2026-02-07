@@ -13,13 +13,16 @@
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/core" />
             <option value="$PROJECT_DIR$/core/database" />
+            <option value="$PROJECT_DIR$/core/models" />
             <option value="$PROJECT_DIR$/core/navigation" />
             <option value="$PROJECT_DIR$/featuredetail" />
             <option value="$PROJECT_DIR$/featuredetail/impl" />
             <option value="$PROJECT_DIR$/featuredetail/navigation" />
             <option value="$PROJECT_DIR$/featureone" />
             <option value="$PROJECT_DIR$/featureone/api" />
+            <option value="$PROJECT_DIR$/featureone/di" />
             <option value="$PROJECT_DIR$/featureone/impl" />
+            <option value="$PROJECT_DIR$/featureone/navigation" />
             <option value="$PROJECT_DIR$/featuretwo" />
             <option value="$PROJECT_DIR$/featuretwo/api" />
             <option value="$PROJECT_DIR$/featuretwo/impl" />

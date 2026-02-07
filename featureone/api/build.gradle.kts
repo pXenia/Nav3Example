@@ -13,4 +13,5 @@ android {
 
 dependencies {
     implementation(libs.androidx.navigation3.runtime)
+    implementation(project(":core:models"))
 }

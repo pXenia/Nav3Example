@@ -1,13 +1,13 @@
 package com.example.featureone.impl.data
 
 import com.example.core.database.dao.TaskDao
-import com.example.featureone.impl.domain.Task
-import com.example.featureone.impl.domain.TasksRepository
+import com.example.core.models.Task
+import com.example.featureone.api.domain.TasksRepository
 import jakarta.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
-internal class TasksRepositoryImpl @Inject constructor(
+class TasksRepositoryImpl @Inject constructor(
     private val taskDao: TaskDao
 ) : TasksRepository {
     override fun getAllTasks(): Flow<List<Task>> {

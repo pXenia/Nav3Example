@@ -1,6 +1,6 @@
-package com.example.featureone.impl.domain.usecase
+package com.example.featureone.api.domain
 
-import com.example.featureone.impl.domain.Task
+import com.example.core.models.Task
 import kotlinx.coroutines.flow.Flow
 
 interface GetAllTasksUseCase {
