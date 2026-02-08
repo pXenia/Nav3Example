@@ -1,5 +1,11 @@
 package com.example.nav3example.ui
 
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.slideOutHorizontally
+import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -15,7 +21,7 @@ import androidx.navigation3.ui.NavDisplay
 import com.example.core.navigation.toEntries
 import com.example.featuredetail.navigation.featureTaskDetailEntryBuilder
 import com.example.featureone.navigation.featureOneEntryBuilder
-import com.example.nav3example.navigation.TOP_LEVEL_NAV_ITEMS
+import com.example.nav3example.navigation.topLevelNavItems
 import com.example.selectcolor.navigation.selectColorEntryBuilder
 
 /** Root экран приложения.*/
@@ -25,7 +31,7 @@ fun NavApp(appState: AppState = rememberAppState()) {
         bottomBar = {
             if (appState.shouldShowBottomBar) {
                 NavigationBar {
-                    TOP_LEVEL_NAV_ITEMS.forEach { (key, item) ->
+                    topLevelNavItems.forEach { (key, item) ->
                         val selected = key == appState.navigationState.currentTopLevelKey
                         NavigationBarItem(
                             selected = selected,
@@ -45,9 +51,37 @@ fun NavApp(appState: AppState = rememberAppState()) {
         }
 
         Box(modifier = Modifier.fillMaxSize().padding(padding)) {
+            val duration = 1000
             NavDisplay(
                 entries = appState.navigationState.toEntries(entryProvider),
-                onBack = { appState.navigator.goBack() }
+                onBack = { appState.navigator.goBack() },
+                transitionSpec = {
+                    slideInHorizontally(
+                        initialOffsetX = { it },
+                        animationSpec = tween(duration)
+                    ) togetherWith slideOutHorizontally(
+                        targetOffsetX = { -it / 3 },
+                        animationSpec = tween(duration)
+                    ) + fadeOut(animationSpec = tween(duration))
+                },
+                popTransitionSpec = {
+                    slideInHorizontally(
+                        initialOffsetX = { -it / 3 },
+                        animationSpec = tween(duration)
+                    ) + fadeIn(animationSpec = tween(duration)) togetherWith slideOutHorizontally(
+                        targetOffsetX = { it },
+                        animationSpec = tween(duration)
+                    )
+                },
+                predictivePopTransitionSpec = {
+                    slideInHorizontally(
+                        initialOffsetX = { -it / 3 },
+                        animationSpec = tween(duration)
+                    ) + fadeIn(animationSpec = tween(duration)) togetherWith slideOutHorizontally(
+                        targetOffsetX = { it },
+                        animationSpec = tween(duration)
+                    )
+                }
             )
         }
     }

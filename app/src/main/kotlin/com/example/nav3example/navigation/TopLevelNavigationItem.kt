@@ -16,17 +16,17 @@ data class TopLevelNavigationItem(
     val title: String
 )
 
-val FEATURE_ONE = TopLevelNavigationItem(
+val taskListFeature = TopLevelNavigationItem(
     icon = Icons.Default.Task,
     title = "Задачи",
 )
 
-val FEATURE_TWO = TopLevelNavigationItem(
+val selectColorFeature = TopLevelNavigationItem(
     icon = Icons.Default.ColorLens,
     title = "Цвета",
 )
 
-val TOP_LEVEL_NAV_ITEMS = mapOf(
-    TasksListNavKey to FEATURE_ONE,
-    SelectColorScreenNavKey to FEATURE_TWO
+val topLevelNavItems = mapOf(
+    TasksListNavKey to taskListFeature,
+    SelectColorScreenNavKey to selectColorFeature
 )
