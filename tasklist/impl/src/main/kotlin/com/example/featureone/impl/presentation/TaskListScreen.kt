@@ -9,7 +9,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -22,22 +22,37 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TaskListScreen(
-    modifier: Modifier = Modifier,
     onItemClick: (Long) -> Unit,
     onAddTaskClick: () -> Unit,
     viewModel: TaskListViewModel = hiltViewModel()
 ) {
-    val tasks by viewModel.uiState.collectAsState()
+    val state by viewModel.state.collectAsState()
 
+    TaskListScreenContent(
+        state = state,
+        onItemClick = onItemClick,
+        onAddTaskClick = onAddTaskClick,
+        onIntent = viewModel::onIntent
+    )
+}
+
+@Composable
+private fun TaskListScreenContent(
+    state: TaskListScreenState,
+    onItemClick: (Long) -> Unit,
+    onAddTaskClick: () -> Unit,
+    onIntent: (TaskListScreenIntent) -> Unit,
+    modifier: Modifier = Modifier
+) {
     Box(
         modifier = modifier
             .fillMaxSize()
             .padding(horizontal = 16.dp)
     ) {
         Column(
+            modifier = Modifier.fillMaxSize(),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             Text(
@@ -45,15 +60,26 @@ fun TaskListScreen(
                 style = MaterialTheme.typography.titleLarge,
             )
 
+            if (state.isLoading) {
+                CircularProgressIndicator(modifier = Modifier.align(Alignment.CenterHorizontally))
+            }
+
             LazyColumn(
                 verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
-                items(items = tasks, key = { it.id }) { task ->
+                items(items = state.tasks, key = { it.id }) { task ->
                     TaskItem(
                         task = task,
                         onClick = { onItemClick(task.id) },
-                        onDelete = { viewModel.onDeleteTask(task.id) },
-                        changeStatus = { viewModel.changeTaskStatus(task.id, task.isCompleted) },
+                        onDelete = { onIntent(TaskListScreenIntent.DeleteTask(task.id)) },
+                        changeStatus = {
+                            onIntent(
+                                TaskListScreenIntent.ChangeStatus(
+                                    task.id,
+                                    task.isCompleted
+                                )
+                            )
+                        },
                     )
                 }
             }

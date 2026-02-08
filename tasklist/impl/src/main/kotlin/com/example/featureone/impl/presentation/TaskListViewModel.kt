@@ -2,7 +2,6 @@ package com.example.featureone.impl.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.core.models.Task
 import com.example.featureone.impl.domain.usecases.ChangeTasksStatusUseCase
 import com.example.featureone.impl.domain.usecases.DeleteTaskUseCase
 import com.example.featureone.impl.domain.usecases.GetAllTasksUseCase
@@ -10,6 +9,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import jakarta.inject.Inject
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
@@ -20,22 +20,28 @@ class TaskListViewModel @Inject constructor(
     private val changeTasksStatusUseCase: ChangeTasksStatusUseCase
 ) : ViewModel() {
 
-    val uiState: StateFlow<List<Task>> = getAllTasksUseCase()
+    val state: StateFlow<TaskListScreenState> = getAllTasksUseCase()
+        .map { tasks -> TaskListScreenState(tasks = tasks, isLoading = false) }
         .stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(5000),
-            initialValue = emptyList()
+            initialValue = TaskListScreenState(isLoading = true)
         )
 
-    fun onDeleteTask(id: Long) {
-        viewModelScope.launch {
-            deleteTaskUseCase(id)
+    fun onIntent(
+        intent: TaskListScreenIntent,
+    ) {
+        when (intent) {
+            is TaskListScreenIntent.DeleteTask -> deleteTask(intent.id)
+            is TaskListScreenIntent.ChangeStatus -> changeStatus(intent.id, intent.currentStatus)
         }
     }
 
-    fun changeTaskStatus(id: Long, currentStatus: Boolean) {
-        viewModelScope.launch {
-            changeTasksStatusUseCase(id, !currentStatus)
-        }
+    private fun deleteTask(id: Long) {
+        viewModelScope.launch { deleteTaskUseCase(id) }
+    }
+
+    private fun changeStatus(id: Long, currentStatus: Boolean) {
+        viewModelScope.launch { changeTasksStatusUseCase(id, !currentStatus) }
     }
 }

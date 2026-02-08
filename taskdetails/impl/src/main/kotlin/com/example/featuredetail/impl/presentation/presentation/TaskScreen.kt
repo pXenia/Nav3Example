@@ -8,6 +8,7 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -17,18 +18,37 @@ import androidx.hilt.navigation.compose.hiltViewModel
 
 @Composable
 fun TaskScreen(
+    id: Long,
     onButtonBackClick: () -> Unit,
     viewModel: TaskViewModel = hiltViewModel()
 ) {
-    val state by viewModel.uiState.collectAsState()
-    val currentState = state
+    val state by viewModel.state.collectAsState()
 
-    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-        when (currentState) {
-            is TaskUiState.Loading -> CircularProgressIndicator()
-            is TaskUiState.Error -> Text(currentState.message, color = Color.Red)
-            is TaskUiState.Success -> {
-                val task = currentState.task
+    LaunchedEffect(id) {
+        viewModel.onIntent(TaskScreenIntent.LoadTask(id))
+    }
+
+    TaskScreenContent(
+        state = state,
+        onButtonBackClick = onButtonBackClick
+    )
+}
+
+@Composable
+private fun TaskScreenContent(
+    state: TaskScreenState,
+    onButtonBackClick: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    Box(
+        modifier = modifier.fillMaxSize(),
+        contentAlignment = Alignment.Center
+    ) {
+        when (state) {
+            is TaskScreenState.Loading -> CircularProgressIndicator()
+            is TaskScreenState.Error -> Text(state.message, color = Color.Red)
+            is TaskScreenState.Success -> {
+                val task = state.task
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
                     Text(
                         text = "ID: ${task.id}",

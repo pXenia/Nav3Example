@@ -15,9 +15,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -28,15 +25,28 @@ fun AddTaskScreen(
     onBack: () -> Unit,
     viewModel: AddTaskViewModel = hiltViewModel()
 ) {
-    var taskTitle by remember { mutableStateOf("") }
-    val isSaved by viewModel.isSaved.collectAsState()
+    val state by viewModel.state.collectAsState()
 
-    LaunchedEffect(isSaved) {
-        if (isSaved) {
+    LaunchedEffect(state.isSaved) {
+        if (state.isSaved) {
             onBack()
         }
     }
 
+    AddTaskScreenContent(
+        state = state,
+        onBack = onBack,
+        onIntent = viewModel::onIntent
+    )
+}
+
+@Composable
+private fun AddTaskScreenContent(
+    state: AddTaskScreenState,
+    onBack: () -> Unit,
+    onIntent: (AddTaskScreenIntent) -> Unit,
+    modifier: Modifier = Modifier
+) {
     Scaffold(
         topBar = {
             Text(
@@ -47,7 +57,7 @@ fun AddTaskScreen(
         }
     ) { paddingValues ->
         Column(
-            modifier = Modifier
+            modifier = modifier
                 .fillMaxSize()
                 .padding(paddingValues)
                 .padding(16.dp),
@@ -55,17 +65,17 @@ fun AddTaskScreen(
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             OutlinedTextField(
-                value = taskTitle,
-                onValueChange = { taskTitle = it },
+                value = state.title,
+                onValueChange = { onIntent(AddTaskScreenIntent.TitleChanged(it)) },
                 label = { Text("Введите текст задачи") },
                 modifier = Modifier.fillMaxWidth(),
                 singleLine = true
             )
 
             Button(
-                onClick = { viewModel.save(taskTitle) },
+                onClick = { onIntent(AddTaskScreenIntent.SaveClicked) },
                 modifier = Modifier.fillMaxWidth(),
-                enabled = taskTitle.isNotBlank()
+                enabled = state.title.isNotBlank()
             ) {
                 Text(text = "Сохранить")
             }
