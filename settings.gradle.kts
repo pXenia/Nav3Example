@@ -21,8 +21,8 @@ dependencyResolutionManagement {
 
 rootProject.name = "Nav3Example"
 include(":app")
-include(":featureone:impl")
-include(":featureone:api")
+include(":tasklist:impl")
+include(":tasklist")
 include(":core:navigation")
 include(":featuretwo:api")
 include(":featuretwo:impl")
@@ -30,5 +30,5 @@ include(":featuredetail:impl")
 include(":featuredetail:navigation")
 include(":core:database")
 include(":core:models")
-include(":featureone:di")
-include(":featureone:navigation")
+include(":tasklist:di")
+include(":tasklist:navigation")

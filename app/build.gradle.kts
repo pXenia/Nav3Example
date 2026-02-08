@@ -58,8 +58,8 @@ dependencies {
     implementation(libs.hilt.android)
     ksp(libs.hilt.compiler)
 
-    implementation(project(":featureone:navigation"))
-    implementation(project(":featureone:di"))
+    implementation(project(":tasklist:navigation"))
+    implementation(project(":tasklist:di"))
     implementation(project(":featuretwo:api"))
     implementation(project(":featuretwo:impl"))
     implementation(project(":featuredetail:navigation"))
