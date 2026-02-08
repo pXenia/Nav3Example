@@ -8,7 +8,7 @@ import com.example.core.navigation.NavigationState
 import com.example.core.navigation.Navigator
 import com.example.core.navigation.rememberNavigationState
 import com.example.featureone.navigation.keys.TasksListNavKey
-import com.example.featuretwo.api.SelectColorScreenNavKey
+import com.example.selectcolor.navigation.keys.SelectColorScreenNavKey
 
 /**
  * Обеспечивая сохранение состояния навигации при перекомпоновке.

@@ -16,8 +16,8 @@
             <option value="$PROJECT_DIR$/core/models" />
             <option value="$PROJECT_DIR$/core/navigation" />
             <option value="$PROJECT_DIR$/selectcolor" />
-            <option value="$PROJECT_DIR$/selectcolor/api" />
             <option value="$PROJECT_DIR$/selectcolor/impl" />
+            <option value="$PROJECT_DIR$/selectcolor/navigation" />
             <option value="$PROJECT_DIR$/taskdetails" />
             <option value="$PROJECT_DIR$/taskdetails/di" />
             <option value="$PROJECT_DIR$/taskdetails/impl" />

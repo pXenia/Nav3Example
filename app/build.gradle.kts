@@ -45,6 +45,7 @@ dependencies {
     implementation(libs.androidx.compose.ui.graphics)
     implementation(libs.androidx.compose.ui.tooling.preview)
     implementation(libs.androidx.compose.material3)
+    implementation(libs.androidx.compose.material.icons.extended)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -60,8 +61,7 @@ dependencies {
 
     implementation(project(":tasklist:navigation"))
     implementation(project(":tasklist:di"))
-    implementation(project(":selectcolor:api"))
-    implementation(project(":selectcolor:impl"))
+    implementation(project(":selectcolor:navigation"))
     implementation(project(":taskdetails:navigation"))
     implementation(project(":taskdetails:di"))
     implementation(project(":core:navigation"))

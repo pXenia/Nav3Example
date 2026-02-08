@@ -1,12 +1,12 @@
 package com.example.featureone.di
 
-import com.example.featureone.impl.domain.usecases.ChangeTasksStatusUseCase
-import com.example.featureone.impl.domain.usecases.DeleteTaskUseCase
-import com.example.featureone.impl.domain.usecases.GetAllTasksUseCase
-import com.example.featureone.impl.domain.TasksRepository
 import com.example.featureone.impl.data.TasksRepositoryImpl
+import com.example.featureone.impl.domain.TasksRepository
+import com.example.featureone.impl.domain.usecases.ChangeTasksStatusUseCase
 import com.example.featureone.impl.domain.usecases.ChangeTasksStatusUseCaseImpl
+import com.example.featureone.impl.domain.usecases.DeleteTaskUseCase
 import com.example.featureone.impl.domain.usecases.DeleteTaskUseCaseImp
+import com.example.featureone.impl.domain.usecases.GetAllTasksUseCase
 import com.example.featureone.impl.domain.usecases.GetAllTasksUseCaseImpl
 import dagger.Binds
 import dagger.Module
