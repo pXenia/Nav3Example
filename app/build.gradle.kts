@@ -62,6 +62,7 @@ dependencies {
     implementation(project(":tasklist:di"))
     implementation(project(":featuretwo:api"))
     implementation(project(":featuretwo:impl"))
-    implementation(project(":featuredetail:navigation"))
+    implementation(project(":taskdetails:navigation"))
+    implementation(project(":taskdetails:di"))
     implementation(project(":core:navigation"))
 }

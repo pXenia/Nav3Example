@@ -7,7 +7,7 @@ import androidx.navigation3.runtime.NavKey
 import com.example.core.navigation.NavigationState
 import com.example.core.navigation.Navigator
 import com.example.core.navigation.rememberNavigationState
-import com.example.featureone.navigation.TasksListNavKey
+import com.example.featureone.navigation.keys.TasksListNavKey
 import com.example.featuretwo.api.FeatureTwoNavKey
 
 /**
