@@ -1,10 +1,11 @@
-package com.example.core.navigation
+package com.example.nav3example.navigation
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ColorLens
 import androidx.compose.material.icons.filled.Task
 import androidx.compose.ui.graphics.vector.ImageVector
+import com.example.core.navigation.Route
 
 data class TopLevelNavigationItem(
     val icon: ImageVector,

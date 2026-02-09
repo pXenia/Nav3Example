@@ -1,4 +1,4 @@
-package com.example.core.navigation
+package com.example.nav3example.navigation
 
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar

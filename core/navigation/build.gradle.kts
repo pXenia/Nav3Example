@@ -27,7 +27,4 @@ dependencies {
     implementation(libs.androidx.compose.material.icons.extended)
     implementation(libs.androidx.navigation3.ui)
     implementation(libs.androidx.navigation3.runtime)
-    implementation(project(":selectcolor:impl"))
-    implementation(project(":taskdetails:impl"))
-    implementation(project(":tasklist:impl"))
 }

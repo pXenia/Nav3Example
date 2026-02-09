@@ -61,5 +61,8 @@ dependencies {
 
     implementation(project(":tasklist:di"))
     implementation(project(":taskdetails:di"))
+    implementation(project(":tasklist:navigation"))
+    implementation(project(":taskdetails:navigation"))
+    implementation(project(":selectcolor:navigation"))
     implementation(project(":core:navigation"))
 }

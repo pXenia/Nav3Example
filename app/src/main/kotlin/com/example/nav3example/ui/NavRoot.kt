@@ -1,4 +1,4 @@
-package com.example.core.navigation
+package com.example.nav3example.ui
 
 import androidx.compose.animation.ContentTransform
 import androidx.compose.animation.core.tween
@@ -16,10 +16,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.IntOffset
 import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.ui.NavDisplay
-import com.example.featuredetail.impl.presentation.presentation.AddTaskScreen
-import com.example.featuredetail.impl.presentation.presentation.TaskScreen
-import com.example.featureone.impl.presentation.TaskListScreen
-import com.example.featuretwo.impl.presentation.SelectColorScreen
+import com.example.nav3example.navigation.NavBottomBar
+import com.example.core.navigation.Navigator
+import com.example.core.navigation.Route
+import com.example.core.navigation.rememberNavigationState
+import com.example.core.navigation.toEntries
+import com.example.featuredetail.navigation.taskDetailEntryBuilder
+import com.example.featureone.navigation.tasklistEntryBuilder
+import com.example.nav3example.navigation.topLevelNavItems
+import com.example.selectcolor.navigation.selectColorEntryBuilder
+
 
 @Composable
 fun NavRoot(
@@ -50,39 +56,9 @@ fun NavRoot(
             onBack = navigator::goBack,
             entries = navigationState.toEntries(
                 entryProvider {
-                    entry<Route.TaskDetails> { key ->
-                        TaskScreen(
-                            id = key.id,
-                            onButtonBackClick = { navigator.goBack() },
-                        )
-                    }
-
-                    entry<Route.AddTask> {
-                        AddTaskScreen(
-                            onBack = { navigator.goBack() },
-                        )
-                    }
-
-                    entry<Route.TaskList> {
-                        TaskListScreen(
-                            onItemClick = { navigator.navigate(Route.TaskDetails(it)) },
-                            onAddTaskClick = { navigator.navigate(Route.AddTask) },
-                        )
-                    }
-
-                    entry<Route.SelectColor> { key ->
-                        SelectColorScreen(
-                            stackSize = navigator.getCurrentStackSize(),
-                            onBack = { navigator.goBack() },
-                            addNewScreen = { navigator.navigate(Route.SelectColor(key.id + 1)) },
-                            onResetToRoot = {
-                                navigator.popUpTo(
-                                    route = navigationState.topLevelRoute,
-                                    inclusive = false
-                                )
-                            }
-                        )
-                    }
+                    taskDetailEntryBuilder(navigator)
+                    tasklistEntryBuilder(navigator)
+                    selectColorEntryBuilder(navigator, navigationState.topLevelRoute)
                 }
             ),
             transitionSpec = { NavigationAnimations.defaultTransitionSpec() },

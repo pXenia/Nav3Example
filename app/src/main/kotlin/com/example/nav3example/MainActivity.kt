@@ -4,7 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import com.example.core.navigation.NavRoot
+import com.example.nav3example.ui.NavRoot
 import com.example.nav3example.ui.theme.Nav3ExampleTheme
 import dagger.hilt.android.AndroidEntryPoint
 
