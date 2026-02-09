@@ -2,13 +2,14 @@ package com.example.featuretwo.impl.presentation
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -26,11 +27,19 @@ import androidx.hilt.navigation.compose.hiltViewModel
 
 @Composable
 fun SelectColorScreen(
+    stackSize: Int,
+    onBack: () -> Unit,
+    addNewScreen: () -> Unit,
+    onResetToRoot: () -> Unit,
     viewModel: SelectColorViewModel = hiltViewModel()
 ) {
     val state by viewModel.state.collectAsState()
 
     SelectColorScreenContent(
+        stackSize = stackSize,
+        onBack = onBack,
+        addNewScreen = addNewScreen,
+        onResetToRoot = onResetToRoot,
         state = state,
         onIntent = viewModel::onIntent
     )
@@ -38,21 +47,62 @@ fun SelectColorScreen(
 
 @Composable
 private fun SelectColorScreenContent(
+    stackSize: Int,
+    onBack: () -> Unit,
+    addNewScreen: () -> Unit,
+    onResetToRoot: () -> Unit,
     state: SelectColorScreenState,
     onIntent: (SelectColorScreenIntent) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    Box(
+    Column(
         modifier = modifier
             .fillMaxSize()
             .background(state.backGroundColor),
-
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Button(
-            onClick = { onIntent(SelectColorScreenIntent.ShowDialog) },
-            modifier = Modifier.align(Alignment.Center)
+        Text(
+            text = "Текущий размер стека $stackSize",
+            style = MaterialTheme.typography.headlineSmall
+        )
+
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.Center,
+            verticalAlignment = Alignment.CenterVertically,
         ) {
-            Text(text = "Выбрать цвет")
+            Button(
+                onClick = { onIntent(SelectColorScreenIntent.ShowDialog) },
+            ) {
+                Text(text = "Выбрать цвет")
+            }
+
+            Button(
+                onClick = addNewScreen,
+            ) {
+                Text(text = "Создать еще экран")
+            }
+        }
+
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.Center,
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            Button(
+                onClick = onBack,
+                enabled = stackSize > 1
+            ) {
+                Text(text = "Назад")
+            }
+
+            Button(
+                onClick = onResetToRoot,
+                enabled = stackSize > 1
+            ) {
+                Text(text = "Удалить все созданные экраны")
+            }
         }
 
         if (state.isSelectColorDialogVisible) {

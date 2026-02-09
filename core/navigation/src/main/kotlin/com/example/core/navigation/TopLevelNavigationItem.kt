@@ -1,6 +1,7 @@
 package com.example.core.navigation
 
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ColorLens
 import androidx.compose.material.icons.filled.Task
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -20,13 +21,13 @@ val selectColorFeature = TopLevelNavigationItem(
     title = "Цвета",
 )
 
-//val addTaskFeature = TopLevelNavigationItem(
-//    icon = Icons.Default.Add,
-//    title = "Добавить",
-//)
+val addTaskFeature = TopLevelNavigationItem(
+    icon = Icons.Default.Add,
+    title = "Добавить",
+)
 
 val topLevelNavItems = mapOf(
     Route.TaskList to taskListFeature,
-    Route.SelectColor to selectColorFeature,
-//    Route.AddTask to addTaskFeature
+    Route.SelectColor(1) to selectColorFeature,
+    Route.AddTask to addTaskFeature
 )

@@ -1,5 +1,6 @@
 package com.example.featuretwo.impl.presentation
 
+import android.util.Log
 import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -20,6 +21,15 @@ class SelectColorViewModel @Inject constructor() : ViewModel() {
             is SelectColorScreenIntent.HideDialog -> _state.update { it.copy(isSelectColorDialogVisible = false) }
             is SelectColorScreenIntent.ShowDialog -> _state.update { it.copy(isSelectColorDialogVisible = true) }
         }
+    }
+
+    init {
+        Log.d("SelectColorViewModel", "init {hash=${this.hashCode()}}")
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        Log.d("SelectColorViewModel", "onCleared {hash=${this.hashCode()}}")
     }
 
     private fun applyColors(red: Int, green: Int, blue: Int) {

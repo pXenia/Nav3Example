@@ -6,11 +6,11 @@ import kotlinx.serialization.Serializable
 @Serializable
 sealed interface Route: NavKey {
     @Serializable
-    object TaskList: Route
+    data object TaskList: Route
     @Serializable
-    object AddTask: Route
+    data object AddTask: Route
     @Serializable
     data class TaskDetails(val id: Long): Route
     @Serializable
-    object SelectColor: Route
+    data class SelectColor(val id: Long): Route
 }

@@ -1,5 +1,6 @@
 package com.example.featuredetail.impl.presentation.presentation
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.featuredetail.impl.presentation.domain.usecase.GetTaskUseCase
@@ -21,6 +22,15 @@ class TaskViewModel @Inject constructor(
         when (intent) {
             is TaskScreenIntent.LoadTask -> getTask(intent.id)
         }
+    }
+
+    init {
+        Log.d("TaskViewModel", "init {hash=${this.hashCode()}}")
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        Log.d("TaskViewModel", "onCleared {hash=${this.hashCode()}}")
     }
 
     private fun getTask(id: Long) {

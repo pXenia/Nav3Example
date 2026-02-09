@@ -16,32 +16,23 @@ import androidx.navigation3.runtime.NavKey
 import androidx.navigation3.runtime.rememberDecoratedNavEntries
 import androidx.navigation3.runtime.rememberNavBackStack
 import androidx.navigation3.runtime.rememberSaveableStateHolderNavEntryDecorator
+import androidx.navigation3.runtime.serialization.NavKeySerializer
 import androidx.savedstate.compose.serialization.serializers.MutableStateSerializer
-import androidx.savedstate.serialization.SavedStateConfiguration
-import kotlinx.serialization.PolymorphicSerializer
-import kotlinx.serialization.modules.SerializersModule
-import kotlinx.serialization.modules.polymorphic
 
 class NavigationState(
-    val startRoute: NavKey,
-    topLevelRoute: MutableState<NavKey>,
-    val backStacks: Map<NavKey, NavBackStack<NavKey>>
+    val startRoute: NavKey, // главный экран приложения
+    topLevelRoute: MutableState<NavKey>, // текущая активная вкладка
+    val backStacks: Map<NavKey, NavBackStack<NavKey>> // ключ - стек (несколько стеков одновременно)
 ) {
-    var topLevelRoute by topLevelRoute
-
+    var topLevelRoute: NavKey by topLevelRoute
     val stacksInUse: List<NavKey>
         get() = if (topLevelRoute == startRoute) {
             listOf(startRoute)
         } else {
             listOf(startRoute, topLevelRoute)
         }
-
     val shouldShowBottomBar: Boolean
-        get() {
-            val currentStack = backStacks[topLevelRoute] ?: return true
-            val currentRoute = currentStack.lastOrNull() ?: return true
-            return currentRoute == topLevelRoute
-        }
+        get() = backStacks[topLevelRoute]?.size == 1
 }
 
 
@@ -49,36 +40,22 @@ class NavigationState(
 fun rememberNavigationState(
     startRoute: NavKey, topLevelRoutes: Set<NavKey>
 ): NavigationState {
+
     val topLevelRoute = rememberSerializable(
-        startRoute,
-        topLevelRoutes,
-        configuration = serializersConfig,
-        serializer = MutableStateSerializer(PolymorphicSerializer(NavKey::class))
+        startRoute, topLevelRoutes,
+        serializer = MutableStateSerializer(NavKeySerializer())
     ) {
         mutableStateOf(startRoute)
     }
 
-    val backStacks = topLevelRoutes.associateWith { key ->
-        rememberNavBackStack(
-            configuration = serializersConfig, key
-        )
-    }
+    val backStacks = topLevelRoutes.associateWith { key -> rememberNavBackStack(key) }
 
     return remember(startRoute, topLevelRoutes) {
         NavigationState(
-            startRoute = startRoute, topLevelRoute = topLevelRoute, backStacks = backStacks
+            startRoute = startRoute,
+            topLevelRoute = topLevelRoute,
+            backStacks = backStacks
         )
-    }
-}
-
-val serializersConfig = SavedStateConfiguration {
-    serializersModule = SerializersModule {
-        polymorphic(NavKey::class) {
-            subclass(Route.TaskList::class, Route.TaskList.serializer())
-            subclass(Route.AddTask::class, Route.AddTask.serializer())
-            subclass(Route.SelectColor::class, Route.SelectColor.serializer())
-            subclass(Route.TaskDetails::class, Route.TaskDetails.serializer())
-        }
     }
 }
 
@@ -86,15 +63,20 @@ val serializersConfig = SavedStateConfiguration {
 fun NavigationState.toEntries(
     entryProvider: (NavKey) -> NavEntry<NavKey>
 ): SnapshotStateList<NavEntry<NavKey>> {
+
     val decoratedEntries = backStacks.mapValues { (_, stack) ->
         val decorators = listOf(
             rememberSaveableStateHolderNavEntryDecorator<NavKey>(),
-            rememberViewModelStoreNavEntryDecorator()
+            rememberViewModelStoreNavEntryDecorator<NavKey>()
         )
         rememberDecoratedNavEntries(
-            backStack = stack, entryDecorators = decorators, entryProvider = entryProvider
+            backStack = stack,
+            entryDecorators = decorators,
+            entryProvider = entryProvider
         )
     }
 
-    return stacksInUse.flatMap { decoratedEntries[it] ?: emptyList() }.toMutableStateList()
+    return stacksInUse
+        .flatMap { decoratedEntries[it] ?: emptyList() }
+        .toMutableStateList()
 }

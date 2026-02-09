@@ -70,8 +70,18 @@ fun NavRoot(
                         )
                     }
 
-                    entry<Route.SelectColor> {
-                        SelectColorScreen()
+                    entry<Route.SelectColor> { key ->
+                        SelectColorScreen(
+                            stackSize = navigator.getCurrentStackSize(),
+                            onBack = { navigator.goBack() },
+                            addNewScreen = { navigator.navigate(Route.SelectColor(key.id + 1)) },
+                            onResetToRoot = {
+                                navigator.popUpTo(
+                                    route = navigationState.topLevelRoute,
+                                    inclusive = false
+                                )
+                            }
+                        )
                     }
                 }
             ),
