@@ -21,8 +21,8 @@ import com.example.core.navigation.Navigator
 import com.example.core.navigation.Route
 import com.example.core.navigation.rememberNavigationState
 import com.example.core.navigation.toEntries
-import com.example.featuredetail.navigation.taskDetailEntryBuilder
-import com.example.featureone.navigation.tasklistEntryBuilder
+import com.example.taskdetails.navigation.taskDetailEntryBuilder
+import com.example.tasklist.navigation.tasklistEntryBuilder
 import com.example.nav3example.navigation.topLevelNavItems
 import com.example.selectcolor.navigation.selectColorEntryBuilder
 

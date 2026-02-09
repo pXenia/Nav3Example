@@ -1,7 +1,7 @@
 package com.featuredetail.di
 
-import com.example.featuredetail.impl.presentation.data.TaskRepositoryImpl
-import com.example.featuredetail.impl.presentation.domain.TaskRepository
+import com.example.taskdetails.impl.presentation.data.TaskRepositoryImpl
+import com.example.taskdetails.impl.presentation.domain.TaskRepository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
