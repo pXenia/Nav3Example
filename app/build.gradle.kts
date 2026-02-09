@@ -59,10 +59,7 @@ dependencies {
     implementation(libs.hilt.android)
     ksp(libs.hilt.compiler)
 
-    implementation(project(":tasklist:navigation"))
     implementation(project(":tasklist:di"))
-    implementation(project(":selectcolor:navigation"))
-    implementation(project(":taskdetails:navigation"))
     implementation(project(":taskdetails:di"))
     implementation(project(":core:navigation"))
 }

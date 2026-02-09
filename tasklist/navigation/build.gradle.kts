@@ -19,7 +19,5 @@ android {
 dependencies {
     implementation(libs.androidx.navigation3.runtime)
     implementation(libs.androidx.lifecycle.viewmodel.navigation3)
-    implementation(project(":core:navigation"))
     implementation(project(":tasklist:impl"))
-    implementation(project(":taskdetails:navigation"))
 }

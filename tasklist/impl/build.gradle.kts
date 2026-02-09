@@ -33,8 +33,6 @@ dependencies {
     implementation(libs.hilt.android)
     implementation(libs.androidx.hilt.navigation.compose)
     ksp(libs.hilt.compiler)
-    implementation(project(":taskdetails:navigation"))
-    implementation(project(":core:navigation"))
     implementation(project(":core:database"))
     implementation(project(":core:models"))
 }

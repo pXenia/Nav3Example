@@ -25,6 +25,5 @@ dependencies {
     implementation(libs.androidx.hilt.navigation.compose)
     implementation(libs.androidx.lifecycle.viewmodel.navigation3)
     ksp(libs.hilt.compiler)
-    implementation(project(":core:navigation"))
     implementation(project(":taskdetails:impl"))
 }

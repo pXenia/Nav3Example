@@ -17,15 +17,12 @@
             <option value="$PROJECT_DIR$/core/navigation" />
             <option value="$PROJECT_DIR$/selectcolor" />
             <option value="$PROJECT_DIR$/selectcolor/impl" />
-            <option value="$PROJECT_DIR$/selectcolor/navigation" />
             <option value="$PROJECT_DIR$/taskdetails" />
             <option value="$PROJECT_DIR$/taskdetails/di" />
             <option value="$PROJECT_DIR$/taskdetails/impl" />
-            <option value="$PROJECT_DIR$/taskdetails/navigation" />
             <option value="$PROJECT_DIR$/tasklist" />
             <option value="$PROJECT_DIR$/tasklist/di" />
             <option value="$PROJECT_DIR$/tasklist/impl" />
-            <option value="$PROJECT_DIR$/tasklist/navigation" />
           </set>
         </option>
       </GradleProjectSettings>

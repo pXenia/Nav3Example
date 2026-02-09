@@ -1,9 +1,12 @@
 package com.example.core.navigation
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSerializable
+import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.runtime.toMutableStateList
 import androidx.lifecycle.viewmodel.navigation3.rememberViewModelStoreNavEntryDecorator
@@ -13,75 +16,78 @@ import androidx.navigation3.runtime.NavKey
 import androidx.navigation3.runtime.rememberDecoratedNavEntries
 import androidx.navigation3.runtime.rememberNavBackStack
 import androidx.navigation3.runtime.rememberSaveableStateHolderNavEntryDecorator
+import androidx.savedstate.compose.serialization.serializers.MutableStateSerializer
+import androidx.savedstate.serialization.SavedStateConfiguration
+import kotlinx.serialization.PolymorphicSerializer
+import kotlinx.serialization.modules.SerializersModule
+import kotlinx.serialization.modules.polymorphic
 
-/**
- * Создает состояние навигации, которое сохраняется при изменениях конфигурации и смерти процесса.
- */
+class NavigationState(
+    val startRoute: NavKey,
+    topLevelRoute: MutableState<NavKey>,
+    val backStacks: Map<NavKey, NavBackStack<NavKey>>
+) {
+    var topLevelRoute by topLevelRoute
+
+    val stacksInUse: List<NavKey>
+        get() = if (topLevelRoute == startRoute) {
+            listOf(startRoute)
+        } else {
+            listOf(startRoute, topLevelRoute)
+        }
+}
+
+
 @Composable
 fun rememberNavigationState(
-    startKey: NavKey,
-    topLevelKeys: Set<NavKey>,
+    startRoute: NavKey, topLevelRoutes: Set<NavKey>
 ): NavigationState {
-    val topLevelStack = rememberNavBackStack(startKey)
-    val subStacks = topLevelKeys.associateWith { key -> rememberNavBackStack(key) }
+    val topLevelRoute = rememberSerializable(
+        startRoute,
+        topLevelRoutes,
+        configuration = serializersConfig,
+        serializer = MutableStateSerializer(PolymorphicSerializer(NavKey::class))
+    ) {
+        mutableStateOf(startRoute)
+    }
 
-    return remember(startKey, topLevelKeys) {
+    val backStacks = topLevelRoutes.associateWith { key ->
+        rememberNavBackStack(
+            configuration = serializersConfig, key
+        )
+    }
+
+    return remember(startRoute, topLevelRoutes) {
         NavigationState(
-            startKey = startKey,
-            topLevelStack = topLevelStack,
-            subStacks = subStacks,
+            startRoute = startRoute, topLevelRoute = topLevelRoute, backStacks = backStacks
         )
     }
 }
 
-/**
- * Держатель состояния (State holder) для навигации.
- *
- * @param startKey — начальный ключ навигации. Через этот ключ пользователь будет выходить из приложения.
- * @param topLevelStack — стек обратной навигации верхнего уровня. Содержит только ключи верхнего уровня.
- * @param subStacks — стеки обратной навигации для каждого ключа верхнего уровня.
- */
-class NavigationState(
-    val startKey: NavKey,
-    val topLevelStack: NavBackStack<NavKey>,
-    val subStacks: Map<NavKey, NavBackStack<NavKey>>,
-) {
-    // Текущий ключ верхнего уровня (например, активная вкладка)
-    val currentTopLevelKey: NavKey by derivedStateOf { topLevelStack.last() }
-
-    // Все доступные ключи верхнего уровня
-    val topLevelKeys
-        get() = subStacks.keys
-
-    // Текущий подстек, соответствующий активному ключу верхнего уровня
-    val currentSubStack: NavBackStack<NavKey>
-        get() = subStacks[currentTopLevelKey]
-            ?: error("Sub stack for $currentTopLevelKey does not exist")
-
-    // Текущий активный ключ (экран), на котором находится пользователь
-    val currentKey: NavKey by derivedStateOf { currentSubStack.last() }
+val serializersConfig = SavedStateConfiguration {
+    serializersModule = SerializersModule {
+        polymorphic(NavKey::class) {
+            subclass(Route.TaskList::class, Route.TaskList.serializer())
+            subclass(Route.AddTask::class, Route.AddTask.serializer())
+            subclass(Route.SelectColor::class, Route.SelectColor.serializer())
+            subclass(Route.TaskDetails::class, Route.TaskDetails.serializer())
+        }
+    }
 }
 
-/**
- * Преобразует NavigationState в список записей навигации (NavEntries).
- */
 @Composable
 fun NavigationState.toEntries(
-    entryProvider: (NavKey) -> NavEntry<NavKey>,
+    entryProvider: (NavKey) -> NavEntry<NavKey>
 ): SnapshotStateList<NavEntry<NavKey>> {
-    val decoratedEntries = subStacks.mapValues { (_, stack) ->
+    val decoratedEntries = backStacks.mapValues { (_, stack) ->
         val decorators = listOf(
             rememberSaveableStateHolderNavEntryDecorator<NavKey>(),
-            rememberViewModelStoreNavEntryDecorator<NavKey>(),
+            rememberViewModelStoreNavEntryDecorator()
         )
         rememberDecoratedNavEntries(
-            backStack = stack,
-            entryDecorators = decorators,
-            entryProvider = entryProvider,
+            backStack = stack, entryDecorators = decorators, entryProvider = entryProvider
         )
     }
 
-    return topLevelStack
-        .flatMap { decoratedEntries[it] ?: emptyList() }
-        .toMutableStateList()
+    return stacksInUse.flatMap { decoratedEntries[it] ?: emptyList() }.toMutableStateList()
 }
