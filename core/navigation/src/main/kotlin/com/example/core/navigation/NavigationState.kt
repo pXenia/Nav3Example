@@ -35,6 +35,13 @@ class NavigationState(
         } else {
             listOf(startRoute, topLevelRoute)
         }
+
+    val shouldShowBottomBar: Boolean
+        get() {
+            val currentStack = backStacks[topLevelRoute] ?: return true
+            val currentRoute = currentStack.lastOrNull() ?: return true
+            return currentRoute == topLevelRoute
+        }
 }
 
 

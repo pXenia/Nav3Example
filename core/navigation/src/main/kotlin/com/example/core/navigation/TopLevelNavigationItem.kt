@@ -20,7 +20,13 @@ val selectColorFeature = TopLevelNavigationItem(
     title = "Цвета",
 )
 
+//val addTaskFeature = TopLevelNavigationItem(
+//    icon = Icons.Default.Add,
+//    title = "Добавить",
+//)
+
 val topLevelNavItems = mapOf(
     Route.TaskList to taskListFeature,
-    Route.SelectColor to selectColorFeature
+    Route.SelectColor to selectColorFeature,
+//    Route.AddTask to addTaskFeature
 )

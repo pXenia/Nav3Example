@@ -1,5 +1,6 @@
 package com.example.core.navigation
 
+import androidx.compose.animation.ContentTransform
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -12,6 +13,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.IntOffset
 import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.ui.NavDisplay
 import com.example.featuredetail.impl.presentation.presentation.AddTaskScreen
@@ -33,15 +35,16 @@ fun NavRoot(
 
     Scaffold(
         bottomBar = {
-            NavBottomBar(
-                selectedKey = navigationState.topLevelRoute,
-                onSelectKey = {
-                    navigator.navigate(it)
-                }
-            )
+            if (navigationState.shouldShowBottomBar) {
+                NavBottomBar(
+                    selectedKey = navigationState.topLevelRoute,
+                    onSelectKey = {
+                        navigator.navigate(it)
+                    }
+                )
+            }
         }
     ) { padding ->
-        val duration = 1000
         NavDisplay(
             modifier = modifier.fillMaxSize().padding(padding),
             onBack = navigator::goBack,
@@ -72,33 +75,37 @@ fun NavRoot(
                     }
                 }
             ),
-            transitionSpec = {
-                slideInHorizontally(
-                    initialOffsetX = { it },
-                    animationSpec = tween(duration)
-                ) togetherWith slideOutHorizontally(
-                    targetOffsetX = { -it / 3 },
-                    animationSpec = tween(duration)
-                ) + fadeOut(animationSpec = tween(duration))
-            },
-            popTransitionSpec = {
-                slideInHorizontally(
-                    initialOffsetX = { -it / 3 },
-                    animationSpec = tween(duration)
-                ) + fadeIn(animationSpec = tween(duration)) togetherWith slideOutHorizontally(
-                    targetOffsetX = { it },
-                    animationSpec = tween(duration)
-                )
-            },
-            predictivePopTransitionSpec = {
-                slideInHorizontally(
-                    initialOffsetX = { -it / 3 },
-                    animationSpec = tween(duration)
-                ) + fadeIn(animationSpec = tween(duration)) togetherWith slideOutHorizontally(
-                    targetOffsetX = { it },
-                    animationSpec = tween(duration)
-                )
-            }
+            transitionSpec = { NavigationAnimations.defaultTransitionSpec() },
+            popTransitionSpec = { NavigationAnimations.defaultPopTransitionSpec() },
+            predictivePopTransitionSpec = { NavigationAnimations.defaultPopTransitionSpec() }
+        )
+    }
+}
+
+object NavigationAnimations {
+    const val DURATION_MS = 1000
+    const val SLIDE_OUT = 3
+
+    fun slideInSpec() = tween<IntOffset>(DURATION_MS)
+    fun fadeSpec() = tween<Float>(DURATION_MS)
+
+    fun defaultTransitionSpec(): ContentTransform {
+        return slideInHorizontally(
+            initialOffsetX = { it },
+            animationSpec = slideInSpec()
+        ) togetherWith slideOutHorizontally(
+            targetOffsetX = { -it / SLIDE_OUT},
+            animationSpec = slideInSpec()
+        ) + fadeOut(animationSpec = fadeSpec())
+    }
+
+    fun defaultPopTransitionSpec(): ContentTransform {
+        return slideInHorizontally(
+            initialOffsetX = { -it / SLIDE_OUT },
+            animationSpec = slideInSpec()
+        ) + fadeIn(animationSpec = fadeSpec()) togetherWith slideOutHorizontally(
+            targetOffsetX = { it },
+            animationSpec = slideInSpec()
         )
     }
 }
